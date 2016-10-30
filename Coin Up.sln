@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{DC3A1A9C-C21B-95F3-7E9E-DB366AB56AC8}") = "Coin Up", "Assembly-CSharp.csproj", "{4FF11BE5-A27D-C902-EA81-62A53F5E82B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FF11BE5-A27D-C902-EA81-62A53F5E82B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF11BE5-A27D-C902-EA81-62A53F5E82B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF11BE5-A27D-C902-EA81-62A53F5E82B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF11BE5-A27D-C902-EA81-62A53F5E82B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
