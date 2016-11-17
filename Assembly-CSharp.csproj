@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\AddButtons.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\LevelManger.cs" />
+     <Compile Include="Assets\Scripts\Options.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>

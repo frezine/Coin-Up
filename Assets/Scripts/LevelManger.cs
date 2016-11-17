@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 public class LevelManger : MonoBehaviour {
 
@@ -10,26 +9,16 @@ public class LevelManger : MonoBehaviour {
 		Application.LoadLevel (name);
 	}
 
-
-	public Dropdown dropdown;
-
-
-	public int players = 2;
-	public void numPlayers(bool clicked) {
-
-		//Debug.Log (dropdown.value); 	
-
-		if (dropdown.value == 0) {
-			players = 2;
-		} else if (dropdown.value == 1) {
-			players = 3;
-		} else if (dropdown.value == 1) {
-			players = 4;
-		}
-		Debug.Log (players);
+	void Awake(){
+		
 	}
 
-
+	public void Player(){
+//		Debug.Log(optionsMenu.GetChild ());
+	}
+	public void Player23(){
+//		Debug.Log(optionsMenu.GetChild ());
+	}
 	public void QuitGame() {
 		Application.Quit ();
 	}
@@ -42,8 +31,6 @@ public class LevelManger : MonoBehaviour {
 			optionsMenu.gameObject.SetActive (clicked);
 			mainMenu.gameObject.SetActive (true);
 		}
-
-		//Debug.Log ("123");
 	}
 		
 

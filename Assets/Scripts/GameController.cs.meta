@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 9d15eb4570d40482faac12b2aea10249
-timeCreated: 1477609061
+timeCreated: 1479375572
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - penny: {fileID: 21300000, guid: db1a5f442b0c14b6da0882ad156cdf18, type: 3}
+  - nickel: {instanceID: 0}
+  - dime: {instanceID: 0}
+  - quarter: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
