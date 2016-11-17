@@ -82,7 +82,7 @@ public class Options : MonoBehaviour {
 
 	public void setOptions(bool clicked){
 		GameObject pl = GameObject.FindGameObjectWithTag ("players");
-		pl.GetComponent<>
+//		pl.GetComponent<>
 	}
 
 }
