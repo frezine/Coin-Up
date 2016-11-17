@@ -9,7 +9,16 @@ public class LevelManger : MonoBehaviour {
 		Application.LoadLevel (name);
 	}
 
+	void Awake(){
+		
+	}
 
+	public void Player(){
+//		Debug.Log(optionsMenu.GetChild ());
+	}
+	public void Player23(){
+//		Debug.Log(optionsMenu.GetChild ());
+	}
 	public void QuitGame() {
 		Application.Quit ();
 	}

@@ -9,10 +9,12 @@ public class AddButtons : MonoBehaviour {
 	[SerializeField]
 	private GameObject btn;
 
+	[SerializeField]
+	private GameObject options;
 
 	void Awake(){
-
-		for (int i = 0; i < 12; i++) {
+		int n = options.gameObject.GetComponent<Options> ().numCoins;
+		for (int i = 0; i < n; i++) {
 			GameObject button = Instantiate (btn);
 			button.name = "" + i;
 			button.transform.SetParent (puzzlefield, false);
