@@ -37,6 +37,8 @@ public class GameController : MonoBehaviour {
 	private int left = 0;
 	private int right;
 
+	private int length;
+
 	private int rounds;
 	private int p1win = 0;
 	private int p2win = 0;
@@ -81,12 +83,15 @@ public class GameController : MonoBehaviour {
 			}
 
 		}
-		right = objects.Length - 1;
+		length = objects.Length - 1;
+		right = length;
 	}
 
 	void AddListeners(){
 		foreach (Button btn in btns) {
 			btn.onClick.AddListener (() => PickAPuzzle ());
+			btn.interactable = true;
+			btn.image.color = new Color(1,1,1,1);
 		}
 	}
 
@@ -204,7 +209,8 @@ public class GameController : MonoBehaviour {
 		player2Text.text = "Player 2: 0.00";
 		p1Score = 0;
 		p2Score = 0;
-		
+		left = 0;
+		right = length;
 	}
 							
 
