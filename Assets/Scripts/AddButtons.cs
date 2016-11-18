@@ -13,11 +13,11 @@ public class AddButtons : MonoBehaviour {
 	private GameObject options;
 
 	void Awake(){
-		int n = options.gameObject.GetComponent<Options> ().numCoins;
+		int n = options.gameObject.GetComponent<Options> ().numCoins;	
 		for (int i = 0; i < n; i++) {
 			GameObject button = Instantiate (btn);
 			button.name = "" + i;
-			button.transform.SetParent (puzzlefield, false);
+			button.transform.SetParent (puzzlefield, false);	
 		}
 	}
 

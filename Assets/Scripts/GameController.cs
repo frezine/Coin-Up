@@ -37,23 +37,35 @@ public class GameController : MonoBehaviour {
 	private int left = 0;
 	private int right;
 
+	private int rounds;
+	private int p1win = 0;
+	private int p2win = 0;
+
 	public List<Button> btns = new List<Button>();
 
 	void Start(){
 		GetButtons ();
 		AddListeners ();
+		CountRounds ();
 		options.numCoins = 12;
 		options.numPlayers = 2;
-		options.numRounds = 1;
+		options.numRounds = 1;		
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
+		gameOverText.text = "";
 	}
+
+	void CountRounds (){
+		rounds = options.gameObject.GetComponent<Options> ().numRounds;
+		Debug.Log ("initial rounds " + rounds);
+	}
+		
 
 	void GetButtons(){
 		GameObject[] objects = GameObject.FindGameObjectsWithTag ("PuzzleButton");
 
 
-
+		Debug.Log ("GetButtons: " + objects.Length);		
 		for (int i = 0; i < objects.Length; i++) {
 			float randomCoin = Random.Range (0, 4);
 			Debug.Log (randomCoin);
@@ -124,21 +136,76 @@ public class GameController : MonoBehaviour {
 		StartCoroutine (PickedACoin ());
 		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
 		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
-		if (GameIsFinished ()) {
+		if (RoundIsFinished ()) {
 			player1Text.text = "Player 1: " + p1Score; 
 			player2Text.text = "Player 2: " + p2Score; 
-//			Player1Text.text = p1Score.ToString();
-//			GUIText gameOverText; 
 			Debug.Log ("Player 1: " + p1Score + "; Player 2: " + p2Score);
+
+			if (p1Score > p2Score) {
+				p1win += 1;
+			}
+			if (p1Score < p2Score) {
+				p2win += 1;
+			}
+
+			rounds -= 1;
+			GameOver (rounds);
+
+//			if (rounds == 0) {
+//				string winner;
+//				if (p1win > p2win) {
+//					winner = "Player 1 wins!";
+//				} else if (p1win < p2win) {
+//					winner = "Player 2 wins!";
+//				} else {
+//					winner = "No winner!";
+//				}
+//				gameOverText.text = "Game over! " + winner; 
+//			} else {
+//				Debug.Log ("restart game");
+//				Debug.Log (rounds);
+//				RestartGame ();
+//			}
+
 		}
 	}
 
 	IEnumerator PickedACoin(){
 		yield return new WaitForSeconds (1f);
+	}
+		
 
-	 }
-
-	bool GameIsFinished(){
+	bool RoundIsFinished(){
 		return left > right;
 	}
+
+	public void GameOver(int n) {
+		if (rounds == 0) {
+			string winner;
+			if (p1win > p2win) {
+				winner = "Player 1 wins!";
+			} else if (p1win < p2win) {
+				winner = "Player 2 wins!";
+			} else {
+				winner = "No winner!";
+			}
+			gameOverText.text = "Game over! " + winner; 
+		} else {
+			Debug.Log ("restart game");
+			Debug.Log (rounds);
+			RestartGame ();
+		}
+	}
+
+	public void RestartGame() {
+		GetButtons ();
+		AddListeners ();
+		player1Text.text = "Player 1: 0.00";
+		player2Text.text = "Player 2: 0.00";
+		p1Score = 0;
+		p2Score = 0;
+		
+	}
+							
+
 }
