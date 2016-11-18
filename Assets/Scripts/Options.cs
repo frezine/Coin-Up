@@ -20,12 +20,16 @@ public class Options : MonoBehaviour {
 	void Awake(){
 		
 		if (option == null) {
+			
 			DontDestroyOnLoad (gameObject);
 			option = this;
 		} else if (option != this) {
+
 			Destroy (gameObject);
 
 		}
+
+
 
 		//		DontDestroyOnLoad (transform.gameObject);
 	}

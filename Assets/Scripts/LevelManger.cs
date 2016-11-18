@@ -17,7 +17,7 @@ public class LevelManger : MonoBehaviour {
 //		Debug.Log(optionsMenu.GetChild ());
 	}
 	public void Player23(){
-//		Debug.Log(optionsMenu.GetChild ());
+//		Debug.Log(GameObject.FindGameObjectWithTag("coins").GetComponent<T>);
 	}
 	public void QuitGame() {
 		Application.Quit ();

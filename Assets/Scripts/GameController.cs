@@ -7,15 +7,31 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField]
 	private Sprite penny;
+
 	[SerializeField]
 	private Sprite nickel;
+
 	[SerializeField]
 	private Sprite dime;
+
 	[SerializeField]
 	private Sprite quarter;
 
+	[SerializeField]
+	private Options options;
+
+
+
 	private float p1Score = 0;
 	private float p2Score = 0;
+
+	[SerializeField]
+	private GUIText player1Text;
+	[SerializeField]
+	private GUIText player2Text; 
+	[SerializeField]
+	private GUIText gameOverText; 
+
 	private int turn = 0;
 
 	private int left = 0;
@@ -26,6 +42,11 @@ public class GameController : MonoBehaviour {
 	void Start(){
 		GetButtons ();
 		AddListeners ();
+		options.numCoins = 12;
+		options.numPlayers = 2;
+		options.numRounds = 1;
+		player1Text.text = "Player 1: 0.00";
+		player2Text.text = "Player 2: 0.00";
 	}
 
 	void GetButtons(){
@@ -99,10 +120,15 @@ public class GameController : MonoBehaviour {
 		} else {
 			
 		}
-
+//		Player1Text.text = p1Score.ToString();
 		StartCoroutine (PickedACoin ());
-
+		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
+		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
 		if (GameIsFinished ()) {
+			player1Text.text = "Player 1: " + p1Score; 
+			player2Text.text = "Player 2: " + p2Score; 
+//			Player1Text.text = p1Score.ToString();
+//			GUIText gameOverText; 
 			Debug.Log ("Player 1: " + p1Score + "; Player 2: " + p2Score);
 		}
 	}
