@@ -155,23 +155,6 @@ public class GameController : MonoBehaviour {
 
 			rounds -= 1;
 			GameOver (rounds);
-
-//			if (rounds == 0) {
-//				string winner;
-//				if (p1win > p2win) {
-//					winner = "Player 1 wins!";
-//				} else if (p1win < p2win) {
-//					winner = "Player 2 wins!";
-//				} else {
-//					winner = "No winner!";
-//				}
-//				gameOverText.text = "Game over! " + winner; 
-//			} else {
-//				Debug.Log ("restart game");
-//				Debug.Log (rounds);
-//				RestartGame ();
-//			}
-
 		}
 	}
 
