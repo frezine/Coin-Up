@@ -7,15 +7,23 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField]
 	private Sprite penny;
+	[SerializeField]
+	private Sprite pennyH;
 
 	[SerializeField]
 	private Sprite nickel;
+	[SerializeField]
+	private Sprite nickelH;
 
 	[SerializeField]
 	private Sprite dime;
+	[SerializeField]
+	private Sprite dimeH;
 
 	[SerializeField]
 	private Sprite quarter;
+	[SerializeField]
+	private Sprite quarterH;
 
 	[SerializeField]
 	private Options options;
@@ -85,6 +93,7 @@ public class GameController : MonoBehaviour {
 		}
 		length = objects.Length - 1;
 		right = length;
+		HighlightCoins ();
 	}
 
 	void AddListeners(){
@@ -95,20 +104,45 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public void HighlightCoins(){
+		if (btns [left].image.sprite == penny) {
+			btns [left].image.sprite = pennyH;
+		} else if (btns [left].image.sprite == nickel) {
+			btns [left].image.sprite = nickelH;
+		} else if (btns [left].image.sprite == dime) {
+			btns [left].image.sprite = dimeH;
+		} else if (btns [left].image.sprite == quarter) {
+			btns [left].image.sprite = quarterH;
+		} else {
+		}
+
+		if (btns [right].image.sprite == penny) {
+			btns [right].image.sprite = pennyH;
+		} else if (btns [right].image.sprite == nickel) {
+			btns [right].image.sprite = nickelH;
+		} else if (btns [right].image.sprite == dime) {
+			btns [right].image.sprite = dimeH;
+		} else if (btns [right].image.sprite == quarter) {
+			btns [right].image.sprite = quarterH;
+		} else {
+		}
+	}
+
 	public void PickAPuzzle(){
+
 		string name = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
 		Debug.Log ("clicking button named " + name);
 
 		int coinIndex = int.Parse (UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
 		Sprite currentCoin = btns [coinIndex].image.sprite;
 		float coinValue = 0f;
-		if (currentCoin == penny) {
+		if (currentCoin == pennyH) {
 			coinValue = .01f;
-		} else if (currentCoin == nickel) {
+		} else if (currentCoin == nickelH) {
 			coinValue = .05f;
-		} else if (currentCoin == dime) {
+		} else if (currentCoin == dimeH) {
 			coinValue = .10f;
-		} else if (currentCoin == quarter) {
+		} else if (currentCoin == quarterH) {
 			coinValue = .25f;
 		}
 
@@ -139,6 +173,7 @@ public class GameController : MonoBehaviour {
 		}
 //		Player1Text.text = p1Score.ToString();
 		StartCoroutine (PickedACoin ());
+
 		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
 		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
 		if (RoundIsFinished ()) {
@@ -155,7 +190,10 @@ public class GameController : MonoBehaviour {
 
 			rounds -= 1;
 			GameOver (rounds);
+		} else {
+			HighlightCoins ();
 		}
+
 	}
 
 	IEnumerator PickedACoin(){
