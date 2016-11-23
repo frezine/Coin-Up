@@ -104,6 +104,28 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public void ShuffleCoins(){
+		for (var i = right; i > left; i--) {
+			var r = Random.Range (0, i);
+			var tmp = btns [i].image.sprite;
+			btns [i].image.sprite = btns [r].image.sprite;
+			btns [r].image.sprite = tmp;
+		}
+
+//		for (var i = left; i < right; i++) {
+//			if (btns [i].image.sprite == penny) {
+//				btns [i].image.sprite = penny;
+//			} else if (btns [i].image.sprite == nickel) {
+//				btns [i].image.sprite = nickel;
+//			} else if (btns [i].image.sprite == dime) {
+//				btns [left].image.sprite = dime;
+//			} else if (btns [i].image.sprite == quarter) {
+//				btns [i].image.sprite = quarter;
+//			} else {
+//			}
+//		}
+	}
+
 	public void HighlightCoins(){
 		if (btns [left].image.sprite == penny) {
 			btns [left].image.sprite = pennyH;
@@ -125,6 +147,19 @@ public class GameController : MonoBehaviour {
 		} else if (btns [right].image.sprite == quarter) {
 			btns [right].image.sprite = quarterH;
 		} else {
+		}
+		for (int i = left + 1; i < right; i++) {
+			if (btns [i].image.sprite == penny || btns [i].image.sprite == pennyH) {
+				btns [i].image.sprite = penny;
+			} else if (btns [i].image.sprite == nickel || btns [i].image.sprite == nickelH) {
+				btns [i].image.sprite = nickel;
+			} else if (btns [i].image.sprite == dime || btns [i].image.sprite == dimeH) {
+				btns [i].image.sprite = dime;
+			} else if (btns [i].image.sprite == quarter || btns [i].image.sprite == quarterH) {
+				btns [i].image.sprite = quarter;
+			} else {
+			}
+
 		}
 	}
 
@@ -191,6 +226,7 @@ public class GameController : MonoBehaviour {
 			rounds -= 1;
 			GameOver (rounds);
 		} else {
+//			ShuffleCoins ();
 			HighlightCoins ();
 		}
 
