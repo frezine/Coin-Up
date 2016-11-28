@@ -32,6 +32,11 @@ public class LevelManger : MonoBehaviour {
 			mainMenu.gameObject.SetActive (true);
 		}
 	}
+
+	public void HelpButton() {
+		LoadScene ("HelpScreen");
+	}
+		
 		
 
 }
