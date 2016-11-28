@@ -40,6 +40,12 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private GUIText gameOverText; 
 
+	[SerializeField]
+	private GUIText highlight_score_p1;
+
+	[SerializeField]
+	private GUIText highlight_score_p2;
+
 	private int turn = 0;
 
 	private int left = 0;
@@ -63,6 +69,12 @@ public class GameController : MonoBehaviour {
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		gameOverText.text = "";
+
+		highlight_score_p1.text = "";
+		highlight_score_p1.fontSize = 30;
+		highlight_score_p2.text = "";
+		highlight_score_p2.fontSize = 30;
+
 	}
 
 	void CountRounds (){
@@ -184,8 +196,12 @@ public class GameController : MonoBehaviour {
 		if (coinIndex == left) {
 			if (turn % 2 == 0) {
 				p1Score += coinValue;
+				highlight_score_p1.text = "+  " + coinValue.ToString();
+				StartCoroutine("wait_player1");
 			} else {
 				p2Score += coinValue;
+				highlight_score_p2.text = "+  " + coinValue.ToString();
+				StartCoroutine("wait_player2");
 			}
 
 			btns [coinIndex].interactable = false;
@@ -195,8 +211,12 @@ public class GameController : MonoBehaviour {
 		} else if (coinIndex == right) {
 			if (turn % 2 == 0) {
 				p1Score += coinValue;
+				highlight_score_p1.text = "+  " + coinValue.ToString();
+				StartCoroutine("wait_player1");
 			} else {
 				p2Score += coinValue;
+				highlight_score_p2.text = "+  " + coinValue.ToString();
+				StartCoroutine("wait_player2");
 			}
 
 			btns [coinIndex].interactable = false;
@@ -235,7 +255,18 @@ public class GameController : MonoBehaviour {
 	IEnumerator PickedACoin(){
 		yield return new WaitForSeconds (1f);
 	}
-		
+
+	IEnumerator wait_player1()
+	{
+		yield return new WaitForSeconds(2f);
+		highlight_score_p1.text = "";
+	}
+
+	IEnumerator wait_player2()
+	{
+		yield return new WaitForSeconds(2f);
+		highlight_score_p2.text = "";
+	}
 
 	bool RoundIsFinished(){
 		return left > right;
