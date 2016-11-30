@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour {
 	private int p1win = 0;
 	private int p2win = 0;
 	private int showrounds = 1;
-	public string winner;
+
 
 	public List<Button> btns = new List<Button>();
 
@@ -277,11 +277,13 @@ public class GameController : MonoBehaviour {
 		highlight_score_p2.text = "";
 	}
 
+
 	bool RoundIsFinished(){
 		return left > right;
 	}
 
 	public void GameOver(int n) {
+		string winner;
 		if (rounds == 0) {
 			if (p1win > p2win) {
 				winner = "Player 1 wins!";

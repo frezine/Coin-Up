@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LevelManger : MonoBehaviour {
 
-	public Transform mainMenu, optionsMenu;
+	public Transform mainMenu, optionsMenu, HelpScreen;
 
 	public void LoadScene(string name) {
 		Application.LoadLevel (name);
@@ -34,7 +34,12 @@ public class LevelManger : MonoBehaviour {
 	}
 
 	public void HelpButton() {
-		LoadScene ("HelpScreen");
+		HelpScreen.gameObject.SetActive (true);
+		mainMenu.gameObject.SetActive (false);
+	}
+
+	public void Back(){
+		Application.LoadLevel ("menu");
 	}
 		
 		

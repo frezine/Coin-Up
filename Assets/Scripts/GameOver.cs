@@ -12,13 +12,17 @@ public class GameOver : MonoBehaviour {
 
 	public string winner;
 
-	void GetWinner(){
-		winner = gameController.gameObject.GetComponent<GameController> ().winner;
-		GameOverText.text = "Game over! " + winner; 
+//	void GetWinner(){
+//		winner = gameController.gameObject.GetComponent<GameController> ().winner;
+//		GameOverText.text = "Game over! " + winner; 
+//	}
+
+	public void Replay() {
+		Application.LoadLevel ("Scene1");
 	}
 
-	public void BackToMenu() {
-		Application.LoadLevel ("Scene1");
+	public void BackToMenu(){
+		Application.LoadLevel ("menu");
 	}
 
 	public void Exit(){
