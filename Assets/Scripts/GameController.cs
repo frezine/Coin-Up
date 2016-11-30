@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class GameController : MonoBehaviour {
 
 	[SerializeField]
@@ -39,6 +40,9 @@ public class GameController : MonoBehaviour {
 	private GUIText player2Text; 
 	[SerializeField]
 	private GUIText gameOverText; 
+	[SerializeField]
+	private GUIText RoundsText; 
+
 
 	[SerializeField]
 	private GUIText highlight_score_p1;
@@ -56,6 +60,8 @@ public class GameController : MonoBehaviour {
 	private int rounds;
 	private int p1win = 0;
 	private int p2win = 0;
+	private int showrounds = 1;
+	public string winner;
 
 	public List<Button> btns = new List<Button>();
 
@@ -69,6 +75,7 @@ public class GameController : MonoBehaviour {
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		gameOverText.text = "";
+		RoundsText.text = "Rounds: 1";
 
 		highlight_score_p1.text = "";
 		highlight_score_p1.fontSize = 30;
@@ -231,6 +238,7 @@ public class GameController : MonoBehaviour {
 
 		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
 		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
+
 		if (RoundIsFinished ()) {
 			player1Text.text = "Player 1: " + p1Score; 
 			player2Text.text = "Player 2: " + p2Score; 
@@ -244,6 +252,7 @@ public class GameController : MonoBehaviour {
 			}
 
 			rounds -= 1;
+			showrounds += 1;
 			GameOver (rounds);
 		} else {
 //			ShuffleCoins ();
@@ -274,7 +283,6 @@ public class GameController : MonoBehaviour {
 
 	public void GameOver(int n) {
 		if (rounds == 0) {
-			string winner;
 			if (p1win > p2win) {
 				winner = "Player 1 wins!";
 			} else if (p1win < p2win) {
@@ -289,16 +297,23 @@ public class GameController : MonoBehaviour {
 			RestartGame ();
 		}
 	}
+		
 
 	public void RestartGame() {
 		GetButtons ();
 		AddListeners ();
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
+		RoundsText.text = "Rounds: " + showrounds;
 		p1Score = 0;
 		p2Score = 0;
 		left = 0;
 		right = length;
+	}
+
+	IEnumerator BackToMenu() {
+		yield return new WaitForSeconds (0.5f);
+		Application.LoadLevel ("menu");
 	}
 							
 

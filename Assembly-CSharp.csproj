@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AddButtons.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\GameOver.cs" />
      <Compile Include="Assets\Scripts\HelpScreen.cs" />
      <Compile Include="Assets\Scripts\LevelManger.cs" />
      <Compile Include="Assets\Scripts\Options.cs" />
