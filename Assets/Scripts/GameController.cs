@@ -37,11 +37,13 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private GUIText player1Text;
 	[SerializeField]
-	private GUIText player2Text; 
+	private GUIText player2Text;
 	[SerializeField]
-	private GUIText gameOverText; 
+	private GUIText gameOverText;
 	[SerializeField]
-	private GUIText RoundsText; 
+	private GUIText RoundsText;
+	[SerializeField]
+	private GUIText RoundsWinnerText;
 
 
 	[SerializeField]
@@ -61,17 +63,30 @@ public class GameController : MonoBehaviour {
 	private int p1win = 0;
 	private int p2win = 0;
 	private int showrounds = 1;
+	private string round_winner;
 
 
 	public List<Button> btns = new List<Button>();
 
+
+	IEnumerator wait()
+	{
+		//		Debug.Log (Time.time);
+		yield return new WaitForSeconds(5f);
+		//		Debug.Log (Time.time);
+	}
+
+
 	void Start(){
+		//		Debug.Log (Time.time);
+		StartCoroutine (wait ());
+		//		Debug.Log (Time.time);
 		GetButtons ();
 		AddListeners ();
 		CountRounds ();
 		options.numCoins = 12;
 		options.numPlayers = 2;
-		options.numRounds = 1;		
+		options.numRounds = 1;
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		gameOverText.text = "";
@@ -88,13 +103,13 @@ public class GameController : MonoBehaviour {
 		rounds = options.gameObject.GetComponent<Options> ().numRounds;
 		Debug.Log ("initial rounds " + rounds);
 	}
-		
+
 
 	void GetButtons(){
 		GameObject[] objects = GameObject.FindGameObjectsWithTag ("PuzzleButton");
 
 
-		Debug.Log ("GetButtons: " + objects.Length);		
+		Debug.Log ("GetButtons: " + objects.Length);
 		for (int i = 0; i < objects.Length; i++) {
 			float randomCoin = Random.Range (0, 4);
 			Debug.Log (randomCoin);
@@ -108,7 +123,7 @@ public class GameController : MonoBehaviour {
 			} else if (randomCoin % 4 == 3) {
 				btns [i].image.sprite = quarter ;
 			}
-
+			StartCoroutine (wait ());
 		}
 		length = objects.Length - 1;
 		right = length;
@@ -131,18 +146,18 @@ public class GameController : MonoBehaviour {
 			btns [r].image.sprite = tmp;
 		}
 
-//		for (var i = left; i < right; i++) {
-//			if (btns [i].image.sprite == penny) {
-//				btns [i].image.sprite = penny;
-//			} else if (btns [i].image.sprite == nickel) {
-//				btns [i].image.sprite = nickel;
-//			} else if (btns [i].image.sprite == dime) {
-//				btns [left].image.sprite = dime;
-//			} else if (btns [i].image.sprite == quarter) {
-//				btns [i].image.sprite = quarter;
-//			} else {
-//			}
-//		}
+		//		for (var i = left; i < right; i++) {
+		//			if (btns [i].image.sprite == penny) {
+		//				btns [i].image.sprite = penny;
+		//			} else if (btns [i].image.sprite == nickel) {
+		//				btns [i].image.sprite = nickel;
+		//			} else if (btns [i].image.sprite == dime) {
+		//				btns [left].image.sprite = dime;
+		//			} else if (btns [i].image.sprite == quarter) {
+		//				btns [i].image.sprite = quarter;
+		//			} else {
+		//			}
+		//		}
 	}
 
 	public void HighlightCoins(){
@@ -203,84 +218,154 @@ public class GameController : MonoBehaviour {
 		if (coinIndex == left) {
 			if (turn % 2 == 0) {
 				p1Score += coinValue;
-				highlight_score_p1.text = "+  " + coinValue.ToString();
+				highlight_score_p1.text = "+  " + coinValue.ToString("#0.00");
 				StartCoroutine("wait_player1");
 			} else {
 				p2Score += coinValue;
-				highlight_score_p2.text = "+  " + coinValue.ToString();
+				highlight_score_p2.text = "+  " + coinValue.ToString("#0.00");
 				StartCoroutine("wait_player2");
 			}
-
+			rotateObject (btns [coinIndex].image);
 			btns [coinIndex].interactable = false;
 			btns [coinIndex].image.color = new Color(0,0,0,0);
 			left++;
 			turn++;
+			StartCoroutine (PickedACoin ());
 		} else if (coinIndex == right) {
 			if (turn % 2 == 0) {
 				p1Score += coinValue;
-				highlight_score_p1.text = "+  " + coinValue.ToString();
+				highlight_score_p1.text = "+  " + coinValue.ToString("#0.00");
 				StartCoroutine("wait_player1");
+
 			} else {
 				p2Score += coinValue;
-				highlight_score_p2.text = "+  " + coinValue.ToString();
+				highlight_score_p2.text = "+  " + coinValue.ToString("#0.00");
 				StartCoroutine("wait_player2");
 			}
 
 			btns [coinIndex].interactable = false;
+
 			btns [coinIndex].image.color = new Color(0,0,0,0);
 			right--;
 			turn++;
+			StartCoroutine (PickedACoin ());
 		} else {
-			
+
 		}
-//		Player1Text.text = p1Score.ToString();
-		StartCoroutine (PickedACoin ());
+		//		Player1Text.text = p1Score.ToString();
+		//		StartCoroutine (PickedACoin ());
 
 		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
 		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
 
+
+
 		if (RoundIsFinished ()) {
-			player1Text.text = "Player 1: " + p1Score; 
-			player2Text.text = "Player 2: " + p2Score; 
-			Debug.Log ("Player 1: " + p1Score + "; Player 2: " + p2Score);
+			StartCoroutine (EndRound ());
 
-			if (p1Score > p2Score) {
-				p1win += 1;
-			}
-			if (p1Score < p2Score) {
-				p2win += 1;
-			}
-
-			rounds -= 1;
-			showrounds += 1;
-			GameOver (rounds);
 		} else {
-//			ShuffleCoins ();
+			//			ShuffleCoins ();
 			HighlightCoins ();
 		}
 
 	}
+	public int rotationDirection = -1; // -1 for clockwise
+	// 1 for anti-clockwise
+	public int rotationStep = 10; // should be less than 90
+	// All the objects with which collision will be checked
+	private Vector3 currentRotation, targetRotation;
+
+	private void rotateObject(Image img)
+	{
+		currentRotation = img.transform.eulerAngles;
+		targetRotation.z = (currentRotation.z + (90 * rotationDirection));
+		StartCoroutine (objectRotationAnimation(img));
+	}
+
+
+	IEnumerator objectRotationAnimation(Image img)
+	{
+		// add rotation step to current rotation.
+		currentRotation.z += (rotationStep * rotationDirection);
+		img.transform.eulerAngles = currentRotation;
+		yield return new WaitForSeconds (0);
+		if (((int)currentRotation.z >
+			(int)targetRotation.z && rotationDirection < 0) || // for clockwise
+			((int)currentRotation.z < (int)targetRotation.z && rotationDirection > 0)) // for anti-clockwise
+		{
+			StartCoroutine (objectRotationAnimation(img));
+		}
+		else
+		{
+			img.transform.eulerAngles = targetRotation;
+			//			isRotating = false;
+		}
+	}
+
+	IEnumerator rotateObjectAgain()
+	{
+		yield return new WaitForSeconds (0.2f);
+		//		rotateObject();
+	}
+
+	IEnumerator EndRound()
+	{
+		yield return new WaitForSeconds(2f);
+
+//		player1Text.text = "Player 1: " + p1Score;
+//		player2Text.text = "Player 2: " + p2Score;
+//		Debug.Log ("Player 1: " + p1Score + "; Player 2: " + p2Score);
+
+		if (p1Score > p2Score) {
+			round_winner ="Player 1!";
+			p1win += 1;
+		}
+		if (p1Score < p2Score) {
+			round_winner = "Player 2!";
+			p2win += 1;
+		}
+		player1Text.text = "Player 1: " + p1Score;
+		player2Text.text = "Player 2: " + p2Score;
+		rounds -= 1;
+		if (rounds != 0) {
+			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+		}
+			
+		showrounds += 1;
+		GameOver (rounds);
+		yield return new WaitForSeconds(5f);
+
+	}
+
 
 	IEnumerator PickedACoin(){
+
+		btns [left].enabled = false;
+		btns [right].enabled = false;
 		yield return new WaitForSeconds (1f);
+		btns [left].enabled = true;
+		btns [right].enabled = true;
+
 	}
 
 	IEnumerator wait_player1()
 	{
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1f);
 		highlight_score_p1.text = "";
 	}
 
+
 	IEnumerator wait_player2()
 	{
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1f);
 		highlight_score_p2.text = "";
 	}
-
 
 	bool RoundIsFinished(){
 		return left > right;
 	}
+
+
 
 	public void GameOver(int n) {
 		string winner;
@@ -292,14 +377,19 @@ public class GameController : MonoBehaviour {
 			} else {
 				winner = "No winner!";
 			}
-			gameOverText.text = "Game over! " + winner; 
+			StartCoroutine(wait ());
+
+			gameOverText.text = "Game over! " + winner;
 		} else {
-			Debug.Log ("restart game");
-			Debug.Log (rounds);
+			//RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+			Debug.Log (round_winner);
+			StartCoroutine(wait ());
+//			Debug.Log ("restart game");
+//			Debug.Log (rounds);
 			RestartGame ();
 		}
 	}
-		
+
 
 	public void RestartGame() {
 		GetButtons ();
@@ -307,6 +397,7 @@ public class GameController : MonoBehaviour {
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		RoundsText.text = "Rounds: " + showrounds;
+		//RoundsWinnerText.text = " ";
 		p1Score = 0;
 		p2Score = 0;
 		left = 0;
@@ -317,6 +408,6 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 		Application.LoadLevel ("menu");
 	}
-							
+
 
 }
