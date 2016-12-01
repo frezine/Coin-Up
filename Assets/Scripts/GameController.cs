@@ -327,9 +327,9 @@ public class GameController : MonoBehaviour {
 		player1Text.text = "Player 1: " + p1Score;
 		player2Text.text = "Player 2: " + p2Score;
 		rounds -= 1;
-		if (rounds != 0) {
-			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
-		}
+//		if (rounds != 0) {
+//			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+//		}
 			
 		showrounds += 1;
 		GameOver (rounds);
@@ -381,7 +381,7 @@ public class GameController : MonoBehaviour {
 
 			gameOverText.text = "Game over! " + winner;
 		} else {
-			//RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
 			Debug.Log (round_winner);
 			StartCoroutine(wait ());
 //			Debug.Log ("restart game");
@@ -397,7 +397,7 @@ public class GameController : MonoBehaviour {
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		RoundsText.text = "Rounds: " + showrounds;
-		//RoundsWinnerText.text = " ";
+		RoundsWinnerText.text = " ";
 		p1Score = 0;
 		p2Score = 0;
 		left = 0;
