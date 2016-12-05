@@ -1,33 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
-public class GameOver : MonoBehaviour {
+public class OverOptions : MonoBehaviour {
 
-	[SerializeField]
-	private GUIText GameOverText;
-
-	[SerializeField]
-	private GameController gameController;
-
-	public string winner;
-
-//	void GetWinner(){
-//		winner = gameController.gameObject.GetComponent<GameController> ().winner;
-//		GameOverText.text = "Game over! " + winner; 
-//	}
-
-	public void Replay() {
-		Application.LoadLevel ("Scene1");
+	void Start() {
 	}
 
-	public void BackToMenu(){
-		Application.LoadLevel ("menu");
+	void OnGUI() {
+		GUI.contentColor = Color.red;
+		if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.height / 2 + 150, 100, 40), "Retry?")) {
+			Application.LoadLevel ("Scene1");
+		}
+		if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.height / 2 + 200, 100, 40), "Menu")) {
+			Application.LoadLevel ("menu");
+		}
+		if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.height / 2 + 250, 100, 40), "Quit")) {
+			Application.Quit ();
+		}
+
 	}
-
-	public void Exit(){
-		Application.Quit ();
-	}
-
-
+	
 }
+
