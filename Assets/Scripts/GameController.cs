@@ -111,9 +111,12 @@ public class GameController : MonoBehaviour {
 		RoundsText.text = "Rounds: 1";
 
 		highlight_score_p1.text = "";
-		highlight_score_p1.fontSize = 30;
+		highlight_score_p1.fontSize = 20;
+		highlight_score_p1.fontStyle = FontStyle.Bold;
+
 		highlight_score_p2.text = "";
-		highlight_score_p2.fontSize = 30;
+		highlight_score_p2.fontStyle = FontStyle.Bold;
+		highlight_score_p2.fontSize = 20;
 
 	}
 
@@ -510,6 +513,7 @@ public class GameController : MonoBehaviour {
 		rounds -= 1;
 		if (rounds != 0) {
 			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+			RoundsWinnerText.fontStyle = FontStyle.Bold;
 		}
 
 		showrounds += 1;
@@ -559,7 +563,7 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator wait_player1()
 	{
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(.5f);
 		highlight_score_p1.text = "";
 	}
 
@@ -585,7 +589,7 @@ public class GameController : MonoBehaviour {
 		////		Fade.use.Colors(highlight_score_p2.text,1.0, 0.0, 2.0, EaseType.Out);
 		////		highlight_score_p2.text.
 		//		Debug.Log (c.a);
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(.5f);
 		highlight_score_p2.text = "";
 		//		c.a = 1;
 		//		Debug.Log (c.a);
@@ -612,6 +616,7 @@ public class GameController : MonoBehaviour {
 
 			gameOverText.text = "Game over! " + winner;
 			endOption = true;
+			gameOverText.fontStyle = FontStyle.Bold;
 			//OnGUI ();
 		} else {
 			StartCoroutine(wait ());
@@ -647,7 +652,9 @@ public class GameController : MonoBehaviour {
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		RoundsText.text = "Rounds: " + showrounds;
+		RoundsText.fontStyle = FontStyle.Bold;
 		RoundsWinnerText.text = " ";
+		RoundsWinnerText.fontStyle = FontStyle.Bold;
 		p1Score = 0;
 		p2Score = 0;
 	}
