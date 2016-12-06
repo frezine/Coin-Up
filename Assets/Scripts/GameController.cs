@@ -83,6 +83,31 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private GUIText highlight_score_p2;
 
+
+	[SerializeField]
+	private AudioClip pennySound;
+
+	private AudioSource audio;
+
+
+	[SerializeField]
+	private AudioClip nickelSound;
+
+	[SerializeField]
+	private AudioClip dimeSound;
+
+	[SerializeField]
+	private AudioClip quarterSound;
+
+	[SerializeField]
+	private AudioClip swapSound;
+
+	[SerializeField]
+	private AudioClip shuffleSound;
+
+	[SerializeField]
+	private AudioClip kachingSound;
+
 	private int turn = 0;
 
 	private int left = 0;
@@ -244,6 +269,10 @@ public class GameController : MonoBehaviour {
 		length = objects.Length - 1;
 		right = length;
 		HighlightCoins ();
+		GameObject p1icon = GameObject.FindGameObjectWithTag ("p1icon");
+		p1icon.GetComponent<Image> ().color = new Color (1, 1, 1, .5f);
+		GameObject p2icon = GameObject.FindGameObjectWithTag ("p2icon");
+		p2icon.GetComponent<Image> ().color = new Color (1, 1, 1, 1f);
 
 
 
@@ -411,22 +440,50 @@ public class GameController : MonoBehaviour {
 		float coinValue = 0f;
 		if (currentCoin == pennyH) {
 			coinValue = .01f;
+			audio = GetComponent<AudioSource>();
+			audio.PlayOneShot (pennySound, .4f);
+//			pennySound.PlayOneShot ();
 		} else if (currentCoin == nickelH) {
 			coinValue = .05f;
+			audio = GetComponent<AudioSource>();
+			audio.PlayOneShot (nickelSound, .4f);
 		} else if (currentCoin == dimeH) {
 			coinValue = .10f;
+			audio = GetComponent<AudioSource>();
+			audio.PlayOneShot (dimeSound, .4f);
 		} else if (currentCoin == quarterH) {
 			coinValue = .25f;
+			audio = GetComponent<AudioSource>();
+			audio.PlayOneShot (quarterSound, .4f);
 		} else if (currentCoin == mysteryH) {
-			coinValue = ((float)Random.Range (1, 51)) / 100f;
+			coinValue = ((float)Random.Range (1, 51));
+			audio = GetComponent<AudioSource>();
+
+			if (coinValue < 5) {
+				audio.PlayOneShot (pennySound, .4f);
+			} else if (coinValue < 10) {
+				audio.PlayOneShot (nickelSound, .4f);
+			} else if (coinValue < 25) {
+				audio.PlayOneShot (dimeSound, .4f);
+			} else if (coinValue < 30) {
+				audio.PlayOneShot (quarterSound, .4f);
+			} else if (coinValue < 51) {
+				audio.PlayOneShot (kachingSound, .5f);
+			}
+
+			coinValue = coinValue / 100f;
 		} else if (currentCoin == swapH) {
 			float temp;
 			//			coinValue = p1Score - p2Score;
 			//			p1Score = p2Score;
 			//			p2Score = temp;
+			audio = GetComponent<AudioSource>();
+			audio.PlayOneShot (swapSound, 4f);
 
 		} else if (currentCoin == shuffleH) {
 			coinValue = ((float)Random.Range (1, 51)) / 100f;
+			audio = GetComponent<AudioSource>();
+			audio.PlayOneShot (shuffleSound, 4f);
 		} else {
 			return;
 		}
@@ -438,29 +495,51 @@ public class GameController : MonoBehaviour {
 		} else if (currentCoin == shuffleH){
 			ShuffleCoins(coinIndex);
 		} else {
-			if (turn % 2 == 0) {
+			if (turn % 2 == 1) {
+
 				p1Score += coinValue;
 				highlight_score_p1.text = "+  " + coinValue.ToString ("#0.00");
 				StartCoroutine ("wait_player1");
 
 			} else {
+
 				p2Score += coinValue;
 				highlight_score_p2.text = "+  " + coinValue.ToString ("#0.00");
 				StartCoroutine ("wait_player2");
 			}
 		}
 
+		if (turn % 2 == 1) {
+			GameObject p1icon = GameObject.FindGameObjectWithTag ("p1icon");
+			p1icon.GetComponent<Image> ().color = new Color (1, 1, 1, .5f);
+			GameObject p2icon = GameObject.FindGameObjectWithTag ("p2icon");
+			p2icon.GetComponent<Image> ().color = new Color (1, 1, 1, 1f);
 
 
+		} else {
+			GameObject p1icon = GameObject.FindGameObjectWithTag ("p1icon");
+			p1icon.GetComponent<Image> ().color = new Color (1, 1, 1, 1f);
+			GameObject p2icon = GameObject.FindGameObjectWithTag ("p2icon");
+			p2icon.GetComponent<Image> ().color = new Color (1, 1, 1, .5f);
+
+
+		}
+
+		if (left != right) {
+			rotateObject (btns [coinIndex].image);
+		} else {
+			btns [coinIndex].image.color = new Color(0,0,0,0);
+		}
 		//		btns[coinIndex].image.CrossFadeAlpha (0.0f, .2f, false);
 		//		rotateObject (btns [coinIndex].image);
 		//		yield return new WaitForSeconds (.3f);
 		//		btns [coinIndex].enabled = false;
 		//		splashImage.CrossFadeAlpha (0.0f, 2.5f, false);
 
-		btns [coinIndex].image.color = new Color(0,0,0,0);
+//		btns [coinIndex].image.color = new Color(0,0,0,0);
 
 		turn++;
+
 		btns [left].enabled = false;
 		btns [right].enabled = false;
 		if (coinIndex == left) {
@@ -468,6 +547,7 @@ public class GameController : MonoBehaviour {
 		} else if (coinIndex == right) {
 			right--;
 		}
+
 
 		if (RoundIsFinished ()) {
 			//EndRound ();
@@ -575,6 +655,7 @@ public class GameController : MonoBehaviour {
 		else
 		{
 			img.transform.eulerAngles = targetRotation;
+			img.color = new Color(0,0,0,0);
 			//			isRotating = false;
 		}
 	}
@@ -650,8 +731,11 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+
+
 	IEnumerator wait_player1()
 	{
+
 		yield return new WaitForSeconds(.5f);
 		highlight_score_p1.text = "";
 	}
@@ -707,6 +791,10 @@ public class GameController : MonoBehaviour {
 	}
 	public void GameOver(int n) {
 		string winner;
+		GameObject p1icon = GameObject.FindGameObjectWithTag ("p1icon");
+		p1icon.GetComponent<Image> ().color = new Color (1, 1, 1, 1f);
+		GameObject p2icon = GameObject.FindGameObjectWithTag ("p2icon");
+		p2icon.GetComponent<Image> ().color = new Color (1, 1, 1, 1f);
 		if (p1win == totalrounds || p2win == totalrounds) {
 			CalculateWinner ();
 			//OnGUI ();

@@ -11,9 +11,12 @@ public class SplashFade : MonoBehaviour {
 		splashImage.canvasRenderer.SetAlpha (0.0f);
 
 		FadeIn ();
-		yield return new WaitForSeconds (3.1f);
+//		yield return new WaitForSeconds (3.1f);
+		yield return new WaitForSeconds (0.1f);
+
 		FadeOut ();
-		yield return new WaitForSeconds (2.5f);
+//		yield return new WaitForSeconds (2.5f);
+		yield return new WaitForSeconds (0.1f);
 
 		Application.LoadLevel ("menu");
 	}
