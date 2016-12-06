@@ -127,6 +127,7 @@ public class GameController : MonoBehaviour {
 
 
 	void GetButtons(){
+		Debug.Log("GetButtons()");
 		GameObject[] objects = GameObject.FindGameObjectsWithTag ("PuzzleButton");
 
 		defaultAngle.y = 0;
@@ -156,7 +157,7 @@ public class GameController : MonoBehaviour {
 
 			}
 			btns [i].image.transform.eulerAngles = defaultAngle;
-			Debug.Log ("Coin angle: " + btns [i].image.transform.eulerAngles.y);
+//			Debug.Log ("Coin angle: " + btns [i].image.transform.eulerAngles.y);
 			btns [i].interactable = true;
 			btns [i].enabled = true;
 			btns [i].image.color = new Color(1,1,1,1);
@@ -191,6 +192,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void AddListeners(){
+		Debug.Log ("AddListeners");
 		foreach (Button btn in btns) {
 			btn.onClick.AddListener (() => PickAPuzzle ());
 			btn.interactable = true;
@@ -369,90 +371,56 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		//		if (coinIndex == left) {
-		//			btns [coinIndex].enabled = false;
-		//			if(currentCoin == swapH){
-		//				
-		//					highlight_score_p1.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player1");
-		//					highlight_score_p2.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player2");
-		//				} else {
-		//					p2Score += coinValue;
-		//					highlight_score_p2.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player2");
-		//				}
-		//
-		//
-		//				if (RoundIsFinished ()) {
-		//					StartCoroutine (EndRound ());
-		//				} else {
-		//					StartCoroutine (PickedACoin (coinIndex));
-		//				}
-		//			} else if (coinIndex == right) {
-		//				btns [coinIndex].enabled = false;
-		//
-		//				if (turn % 2 == 0) {
-		//					p1Score += coinValue;
-		//					highlight_score_p1.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player1");
-		//
-		//				} else {
-		//					p2Score += coinValue;
-		//					highlight_score_p2.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player2");
-		//				}
-		//			} else{
-		//				if (turn % 2 == 0) {
-		//					p1Score += coinValue;
-		//					highlight_score_p1.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player1");
-		//				} else {
-		//					p2Score += coinValue;
-		//					highlight_score_p2.text = "+  " + coinValue.ToString("#0.00");
-		//					StartCoroutine("wait_player2");
-		//				}
-		//
-		//
-		//				if (RoundIsFinished ()) {
-		//					StartCoroutine (EndRound ());
-		//				} else {
-		//					StartCoroutine (PickedACoin (coinIndex));
-		//				}
-		//			} 
 
 
-		//			btns [coinIndex].interactable = false;
-		//
-		//			btns [coinIndex].image.color = new Color(0,0,0,0);
-		//			right--;
-		//			turn++;
+//		btns[coinIndex].image.CrossFadeAlpha (0.0f, .2f, false);
+//		rotateObject (btns [coinIndex].image);
+//		yield return new WaitForSeconds (.3f);
+//		btns [coinIndex].enabled = false;
+		//		splashImage.CrossFadeAlpha (0.0f, 2.5f, false);
+
+		btns [coinIndex].image.color = new Color(0,0,0,0);
+
+		turn++;
+		btns [left].enabled = false;
+		btns [right].enabled = false;
+		if (coinIndex == left) {
+			left++;
+		} else if (coinIndex == right) {
+			right--;
+		}
+
+		if (RoundIsFinished ()) {
+			//EndRound ();
+			if (p1Score > p2Score) {
+				round_winner ="Player 1!";
+				p1win += 1;
+			}
+			if (p1Score < p2Score) {
+				round_winner = "Player 2!";
+				p2win += 1;
+			}
+			player1Text.text = "Player 1: " + p1Score;
+			player2Text.text = "Player 2: " + p2Score;
+			rounds -= 1;
+			if (rounds != 0) {
+				RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+				RoundsWinnerText.fontStyle = FontStyle.Bold;
+			}
+
+			showrounds += 1;
+			GameOver (rounds);
+
+		} else {
+			btns [left].enabled = true;
+			btns [right].enabled = true;
+			//			ShuffleCoins ();
+			HighlightCoins ();
+		}
+			
 		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
 		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
-		StartCoroutine (PickedACoin (coinIndex));
-//		if (RoundIsFinished ()) {
-//			StartCoroutine (EndRound ());
-//		} else {
-//			StartCoroutine (PickedACoin (coinIndex));
-//		}
-		////
-		//		} else {
-		//
-		//		}
-		//		Player1Text.text = p1Score.ToString();
-		//		StartCoroutine (PickedACoin ());
 
-
-		//
-		//		if (RoundIsFinished ()) {
-		//			StartCoroutine (EndRound ());
-		//		} else {
-		//		}
-
-		//		} else {
-		//			//			ShuffleCoins ();
-		//			HighlightCoins ();
-		//		}
 
 	}
 	public int rotationDirection = -1; // -1 for clockwise
@@ -644,11 +612,11 @@ public class GameController : MonoBehaviour {
 
 
 	public void RestartGame() {
-
+		Debug.Log ("RestartGame()");
 		left = 0;
 		right = length;
 		GetButtons ();
-		AddListeners ();
+//		AddListeners ();
 		player1Text.text = "Player 1: 0.00";
 		player2Text.text = "Player 2: 0.00";
 		RoundsText.text = "Rounds: " + showrounds;
