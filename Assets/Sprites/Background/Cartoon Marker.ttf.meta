@@ -3,18 +3,17 @@ guid: e588c1f20e92f4ef4ac4c9cbd3fa7abc
 timeCreated: 1480985279
 licenseType: Free
 TrueTypeFontImporter:
-  serializedVersion: 4
+  serializedVersion: 2
   fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontNames:
-  - Cartoon Marker
+  use2xBehaviour: 0
+  fontNames: []
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

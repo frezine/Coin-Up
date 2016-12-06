@@ -43,7 +43,23 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField]
 	private Options options;
+//
+//	[SerializeField]
+//	private Sprite p1r1coin;
+//	[SerializeField]
+//	private Sprite p1r2coin;
+//	[SerializeField]
+//	private Sprite p1r3coin;
+//
+//	[SerializeField]
+//	private Sprite p2r1coin;
+//	[SerializeField]
+//	private Sprite p2r2coin;
+//	[SerializeField]
+//	private Sprite p2r3coin;
 
+	[SerializeField]
+	public Sprite p1r1coin;
 
 
 	private float p1Score = 0;
@@ -75,6 +91,7 @@ public class GameController : MonoBehaviour {
 	private int length;
 
 	private int rounds;
+	private int totalrounds;
 	private int p1win = 0;
 	private int p2win = 0;
 	private int showrounds = 1;
@@ -95,6 +112,8 @@ public class GameController : MonoBehaviour {
 	}
 
 
+
+
 	void Start(){
 		//		Debug.Log (Time.time);
 		StartCoroutine (wait ());
@@ -102,13 +121,70 @@ public class GameController : MonoBehaviour {
 		GetButtons ();
 		AddListeners ();
 		CountRounds ();
-		options.numCoins = 12;
-		options.numPlayers = 2;
-		options.numRounds = 1;
-		player1Text.text = "Player 1: 0.00";
-		player2Text.text = "Player 2: 0.00";
+
+//		p1r1coin.
+		GameObject p1r1 = GameObject.FindGameObjectWithTag ("p1r1coin");
+		p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, 0f);
+
+		GameObject p1r2 = GameObject.FindGameObjectWithTag ("p1r2coin");
+		p1r2.GetComponent<Image> ().color = new Color (1, 1, 1, 0f);
+
+		GameObject p1r3 = GameObject.FindGameObjectWithTag ("p1r3coin");
+		p1r3.GetComponent<Image> ().color = new Color (1, 1, 1, 0f);
+
+		GameObject p2r1 = GameObject.FindGameObjectWithTag ("p2r1coin");
+		p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, 0f);
+
+		GameObject p2r2 = GameObject.FindGameObjectWithTag ("p2r2coin");
+		p2r2.GetComponent<Image> ().color = new Color (1, 1, 1, 0f);
+
+		GameObject p2r3 = GameObject.FindGameObjectWithTag ("p2r3coin");
+		p2r3.GetComponent<Image> ().color = new Color (1, 1, 1, 0f);
+
+		if (totalrounds == 1) {
+//			p1r1 = GameObject.FindGameObjectWithTag ("p1r1coin");
+			p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p2r1 = GameObject.FindGameObjectWithTag ("p2r1coin");
+			p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+		} else if (totalrounds == 2) {
+			p1r1 = GameObject.FindGameObjectWithTag ("p1r1coin");
+			p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p1r2 = GameObject.FindGameObjectWithTag ("p1r2coin");
+			p1r2.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p2r1 = GameObject.FindGameObjectWithTag ("p2r1coin");
+			p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p2r2 = GameObject.FindGameObjectWithTag ("p2r2coin");
+			p2r2.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+		} else {
+			p1r1 = GameObject.FindGameObjectWithTag ("p1r1coin");
+			p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p1r2 = GameObject.FindGameObjectWithTag ("p1r2coin");
+			p1r2.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p1r3 = GameObject.FindGameObjectWithTag ("p1r3coin");
+			p1r3.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p2r1 = GameObject.FindGameObjectWithTag ("p2r1coin");
+			p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p2r2 = GameObject.FindGameObjectWithTag ("p2r2coin");
+			p2r2.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+
+			p2r3 = GameObject.FindGameObjectWithTag ("p2r3coin");
+			p2r3.GetComponent<Image> ().color = new Color (1, 1, 1, .4f);
+		}
+
+
+
+		player1Text.text = "0.00";
+		player2Text.text = "0.00";
 		gameOverText.text = "";
-		RoundsText.text = "Rounds: 1";
+		RoundsText.text = "Round 1";
 
 		highlight_score_p1.text = "";
 		highlight_score_p1.fontSize = 20;
@@ -122,6 +198,7 @@ public class GameController : MonoBehaviour {
 
 	void CountRounds (){
 		rounds = options.gameObject.GetComponent<Options> ().numRounds;
+		totalrounds = rounds;
 		Debug.Log ("initial rounds " + rounds);
 	}
 
@@ -157,7 +234,7 @@ public class GameController : MonoBehaviour {
 
 			}
 			btns [i].image.transform.eulerAngles = defaultAngle;
-//			Debug.Log ("Coin angle: " + btns [i].image.transform.eulerAngles.y);
+			//			Debug.Log ("Coin angle: " + btns [i].image.transform.eulerAngles.y);
 			btns [i].interactable = true;
 			btns [i].enabled = true;
 			btns [i].image.color = new Color(1,1,1,1);
@@ -324,6 +401,8 @@ public class GameController : MonoBehaviour {
 
 	public void PickAPuzzle(){
 
+
+
 		string name = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
 		Debug.Log ("clicking button named " + name);
 
@@ -373,10 +452,10 @@ public class GameController : MonoBehaviour {
 
 
 
-//		btns[coinIndex].image.CrossFadeAlpha (0.0f, .2f, false);
-//		rotateObject (btns [coinIndex].image);
-//		yield return new WaitForSeconds (.3f);
-//		btns [coinIndex].enabled = false;
+		//		btns[coinIndex].image.CrossFadeAlpha (0.0f, .2f, false);
+		//		rotateObject (btns [coinIndex].image);
+		//		yield return new WaitForSeconds (.3f);
+		//		btns [coinIndex].enabled = false;
 		//		splashImage.CrossFadeAlpha (0.0f, 2.5f, false);
 
 		btns [coinIndex].image.color = new Color(0,0,0,0);
@@ -392,24 +471,29 @@ public class GameController : MonoBehaviour {
 
 		if (RoundIsFinished ()) {
 			//EndRound ();
-			if (p1Score > p2Score) {
+			if (p1Score < p2Score) {
 				round_winner ="Player 1!";
 				p1win += 1;
-			}
-			if (p1Score < p2Score) {
+				p1RoundCoinHighlight ();
+
+			} else if (p1Score > p2Score) {
 				round_winner = "Player 2!";
 				p2win += 1;
+				p2RoundCoinHighlight ();
+			} else{
+				p1RoundCoinHighlight ();
+				p2RoundCoinHighlight ();
 			}
-			player1Text.text = "Player 1: " + p1Score;
-			player2Text.text = "Player 2: " + p2Score;
+			player1Text.text =  p1Score.ToString ("#0.00");;
+			player2Text.text =  p2Score.ToString ("#0.00");;
 			rounds -= 1;
 			if (rounds != 0) {
-				RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+//				RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
 				RoundsWinnerText.fontStyle = FontStyle.Bold;
 			}
 
 			showrounds += 1;
-			GameOver (rounds);
+			GameOver (totalrounds);
 
 		} else {
 			btns [left].enabled = true;
@@ -417,12 +501,49 @@ public class GameController : MonoBehaviour {
 			//			ShuffleCoins ();
 			HighlightCoins ();
 		}
-			
-		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
-		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
+
+		player1Text.text = p1Score.ToString ("#0.00");
+		player2Text.text = p2Score.ToString ("#0.00");
 
 
 	}
+
+	public void p1RoundCoinHighlight(){
+	
+		GameObject p1r1 = GameObject.FindGameObjectWithTag ("p1r1coin");
+		GameObject p1r2 = GameObject.FindGameObjectWithTag ("p1r2coin");
+		GameObject p1r3 = GameObject.FindGameObjectWithTag ("p1r3coin");
+
+		if (p1win == 1) {
+			p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+		} else if (p1win == 2) {
+			p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+			p1r2.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+		} else if (p1win == 3) {
+			p1r1.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+			p1r2.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+			p1r3.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+		}
+	}
+
+	public void p2RoundCoinHighlight(){
+
+		GameObject p2r1 = GameObject.FindGameObjectWithTag ("p2r1coin");
+		GameObject p2r2 = GameObject.FindGameObjectWithTag ("p2r2coin");
+		GameObject p2r3 = GameObject.FindGameObjectWithTag ("p2r3coin");
+
+		if (p2win == 1) {
+			p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+		} else if (p2win == 2) {
+			p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+			p2r2.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+		} else if (p2win == 3) {
+			p2r1.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+			p2r2.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+			p2r3.GetComponent<Image> ().color = new Color (1, 1, 1, 1);
+		}
+	}
+
 	public int rotationDirection = -1; // -1 for clockwise
 	// 1 for anti-clockwise
 	public int rotationStep = 10; // should be less than 90
@@ -480,7 +601,7 @@ public class GameController : MonoBehaviour {
 		player2Text.text = "Player 2: " + p2Score;
 		rounds -= 1;
 		if (rounds != 0) {
-			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
+//			RoundsWinnerText.text = "Round " + showrounds + ": winner is " + round_winner;
 			RoundsWinnerText.fontStyle = FontStyle.Bold;
 		}
 
@@ -495,8 +616,8 @@ public class GameController : MonoBehaviour {
 
 
 	IEnumerator PickedACoin(int index){
-		player1Text.text = "Player 1: " + p1Score.ToString ("#0.00");
-		player2Text.text = "Player 2: " + p2Score.ToString ("#0.00");
+		player1Text.text = p1Score.ToString ("#0.00");
+		player2Text.text = p2Score.ToString ("#0.00");
 
 
 		btns[index].image.CrossFadeAlpha (0.0f, .2f, false);
@@ -569,22 +690,25 @@ public class GameController : MonoBehaviour {
 	}
 
 
+	public void CalculateWinner(){
+		string winner;
+		if (p1win > p2win) {
+			winner = "Player 1 wins!";
+		} else if (p1win < p2win) {
+			winner = "Player 2 wins!";
+		} else {
+			winner = "No winner!";
+		}
+		StartCoroutine(wait ());
 
+		gameOverText.text = "Game over! " + winner;
+		endOption = true;
+		gameOverText.fontStyle = FontStyle.Bold;
+	}
 	public void GameOver(int n) {
 		string winner;
-		if (rounds == 0) {
-			if (p1win > p2win) {
-				winner = "Player 1 wins!";
-			} else if (p1win < p2win) {
-				winner = "Player 2 wins!";
-			} else {
-				winner = "No winner!";
-			}
-			StartCoroutine(wait ());
-
-			gameOverText.text = "Game over! " + winner;
-			endOption = true;
-			gameOverText.fontStyle = FontStyle.Bold;
+		if (p1win == totalrounds || p2win == totalrounds) {
+			CalculateWinner ();
 			//OnGUI ();
 		} else {
 			StartCoroutine(wait ());
@@ -602,9 +726,15 @@ public class GameController : MonoBehaviour {
 				Application.LoadLevel ("Scene1");
 			}
 			if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.height / 2 + 70, 100, 40), "Menu")) {
+				options.numCoins = 12;
+				options.numPlayers = 2;
+				options.numRounds = 1;
 				Application.LoadLevel ("menu");
 			}
 			if (GUI.Button (new Rect (Screen.width / 2 + 150, Screen.height / 2 + 70, 100, 40), "Quit")) {
+				options.numCoins = 12;
+				options.numPlayers = 2;
+				options.numRounds = 1;
 				Application.Quit ();
 			}
 		}
@@ -616,10 +746,10 @@ public class GameController : MonoBehaviour {
 		left = 0;
 		right = length;
 		GetButtons ();
-//		AddListeners ();
-		player1Text.text = "Player 1: 0.00";
-		player2Text.text = "Player 2: 0.00";
-		RoundsText.text = "Rounds: " + showrounds;
+		//		AddListeners ();
+		player1Text.text = "0.00";
+		player2Text.text = "0.00";
+		RoundsText.text = "Round " + showrounds;
 		RoundsText.fontStyle = FontStyle.Bold;
 		RoundsWinnerText.text = " ";
 		RoundsWinnerText.fontStyle = FontStyle.Bold;

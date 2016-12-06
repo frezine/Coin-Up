@@ -56,10 +56,10 @@ public class Options : MonoBehaviour {
 			numRounds = 1;
 		}else if(val == 1)
 		{
-			numRounds = 3;	
+			numRounds = 2;	
 		}else if(val == 2)
 		{
-			numRounds = 5;
+			numRounds = 3;
 		}
 		Debug.Log (numRounds);
 		//		return numRounds;
